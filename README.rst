@@ -11,7 +11,7 @@ Primer Pasos
 - Crear una variable protegida llamada $disk con el valor del disco creado para almacenar la info (en caso de no tener disco
 si no que se realiza en el root o disk base, dejar en blanco o no crear) **Protected $disk = 'images';**
 
-.. image:: Model-Exmple.png
+.. image:: Model-Example.png
 
 Utilizacion
 ##########
