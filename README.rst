@@ -12,7 +12,7 @@ Primeros Pasos
   si no que se realiza en el root o disk base, dejar en blanco o no crear) **Protected $disk = 'images';**
 
 
-.. image:: Model-Example.png
+.. image:: Model-Example01.png
 
 Utilizacion
 ------------
