@@ -2,19 +2,20 @@
 Trait para el Manejo de Archivo asociados a modelos.
 ======================================================
 
-Primer Pasos
-############
+Primeros Pasos
+---------------
 
 - Colocar dentro de **app/Traits/** el archivo ModelFileManager.php
 - Dentro del modelo sobre el que se desea aplicar colocar **use App\Traits\ModelFileManager**
 - Luego de abierta la case colocar **use ModelFileManager** 
 - Crear una variable protegida llamada $disk con el valor del disco creado para almacenar la info (en caso de no tener disco
-si no que se realiza en el root o disk base, dejar en blanco o no crear) **Protected $disk = 'images';**
+  si no que se realiza en el root o disk base, dejar en blanco o no crear) **Protected $disk = 'images';**
+
 
 .. image:: Model-Example.png
 
 Utilizacion
-##########
+------------
 
 Almacenar un archivo.
 #####################
@@ -27,15 +28,17 @@ proveniente de un request.
 Ejemplo: 
 Almacenar un archivo en el campo logo del modelo Company, el cual llega por request:
 
+::
 
     public function update(StoreCompany $request, Company $company)
     {
         $company->update($request->input());
         if ($request->hasFile('logo')) {
-            **$company->storeTheFile('store','logo');**
+            $company->storeTheFile('store','logo');
         }
         return redirect()->route('companies.index')->with('message', trans("msg.company_update"))->with('message_type', 'success');
     }
+
 
 Nota, la funcion se encargara de verificar si el campo tiene algun valor, en caso de tenerlo borrara el archivo original y
 procedera a almacenar el nuevo.
@@ -50,5 +53,6 @@ Ejemplo:
 Borrar un archivo en el campo logo del modelo Company.
 
 $company = Company::find($id);
+
 **$company->deleteTheFile('logo');**
 
