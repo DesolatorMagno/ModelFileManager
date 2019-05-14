@@ -20,8 +20,9 @@ Utilizacion
 Almacenar un archivo.
 #####################
 Para almacenar un archivo se utiliza la funcion **storeTheFile()** la cual acepta por parametro 3 valores:
+
 - **$type** el cual acepta **put**, para indicar contenido proveniendo de un get or file_get_content y **store** para indicar contenido
-proveniente de un request.
+  proveniente de un request.
 - **$field** el cual contendra el nombre del campo en el modelo a asociar.
 - **$file** que contendra el contenido del archivo en caso de no provenir desde un request.
 
