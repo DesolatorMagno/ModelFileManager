@@ -27,12 +27,10 @@ Utilizacion
 
 Almacenar un archivo.
 #####################
-Para almacenar un archivo se utiliza la funcion **storeTheFile()** la cual acepta por parametro 3 valores:
+Para almacenar un archivo se utiliza la funcion **storeTheFile()** la cual acepta por parametro 2 valores:
 
-- **$type** el cual acepta **put**, para indicar contenido proveniendo de un get or file_get_content y **store** para indicar contenido
-  proveniente de un request.
-- **$field** el cual contendra el nombre del campo en el modelo a asociar.
-- **$file** que contendra el contenido del archivo en caso de no provenir desde un request.
+- **$field** (required) el cual contendra el nombre del campo en el modelo a asociar.
+- **$file** (optional) este contendra el contenido del archivo en caso de no provenir desde un request.
 
 Ejemplo: 
 Almacenar un archivo en el campo logo del modelo Company, el cual llega por request:
@@ -43,7 +41,7 @@ Almacenar un archivo en el campo logo del modelo Company, el cual llega por requ
     {
         $company->update($request->input());
         if ($request->hasFile('logo')) {
-            $company->storeTheFile('store','logo');
+            $company->storeTheFile('logo');
         }
         return redirect()->route('companies.index')->with('message', trans("msg.company_update"))->with('message_type', 'success');
     }
