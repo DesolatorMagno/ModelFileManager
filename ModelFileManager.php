@@ -31,7 +31,7 @@ trait ModelFileManager
     public function storeTheFile(string $type = 'store', string $field = 'image', $file = '')
     {
         $this->deleteFile($field);
-        $this->storeFile($type,$field,$file);
+        $this->storeFile($type, $field, $file);
         $this->save();
         return;
     }
@@ -70,7 +70,7 @@ trait ModelFileManager
      * @param string $field
      * @return void
      */
-    public function deleteFile(string $field = 'image')
+    protected function deleteFile(string $field = 'image')
     {
         //First upload there is no need to delete
         Log::debug($this->{$field});
@@ -92,7 +92,7 @@ trait ModelFileManager
      * @param string $field
      * @return void
      */
-    public function storeFile(string $type = 'store', string $field = 'image', $file = '')
+    protected function storeFile(string $type = 'store', string $field = 'image', $file = '')
     {
         switch ($type) {
             case 'put':
@@ -113,7 +113,7 @@ trait ModelFileManager
      * @param string $field
      * @return void
      */
-    public function contentFile($file, string $field)
+    protected function contentFile($file, string $field)
     {
         $this->{$field} = Storage::disk($this->disk)->put('', $file);
     }
@@ -124,7 +124,7 @@ trait ModelFileManager
      * @param string $field
      * @return void
      */
-    public function requestFile(string $field)
+    protected function requestFile(string $field)
     {
         $request        = request();
         $this->{$field} = $request->{$field}->store('', $this->disk);
@@ -138,7 +138,7 @@ trait ModelFileManager
      * @param string $funcion
      * @return void
      */
-    public function logError(string $field, string $action = 'descargar', string $funcion = ''): void
+    protected function logError(string $field, string $action = 'descargar', string $funcion = ''): void
     {
         $modelo = class_basename($this);
         if (\Auth::check()) {
