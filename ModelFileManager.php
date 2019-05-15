@@ -82,7 +82,7 @@ trait ModelFileManager
         }
         //If there is not file, just put it in null and return error.
         $this->{$field} = null;
-        return;
+        $this->save();
         $this->logError($field, 'Delete', 'deleteFile');
     }
 
@@ -127,7 +127,6 @@ trait ModelFileManager
             return;
         }
         return;
-
     }
 
     /**
