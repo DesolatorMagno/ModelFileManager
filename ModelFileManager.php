@@ -23,15 +23,14 @@ trait ModelFileManager
     /**
      * Main function used to store a new file.
      *
-     * @param string $type
      * @param string $field
      * @param [type] $file
      * @return void
      */
-    public function storeTheFile(string $type = 'store', string $field = 'image', $file = '')
+    public function storeTheFile(string $field = 'image', $file = '')
     {
         $this->deleteFile($field);
-        $this->storeFile($type, $field, $file);
+        $this->storeFile($field, $file);
         $this->save();
         return;
     }
@@ -73,7 +72,6 @@ trait ModelFileManager
     protected function deleteFile(string $field = 'image')
     {
         //First upload there is no need to delete
-        Log::debug($this->{$field});
         if (!$this->{$field}) {
             return;
         }
@@ -82,27 +80,24 @@ trait ModelFileManager
             $this->{$field} = null;
             return;
         }
+        //If there is not file, just put it in null and return error.
+        $this->{$field} = null;
+        return;
         $this->logError($field, 'Delete', 'deleteFile');
     }
 
     /**
      * Store the content of the file in the disk.
      *
-     * @param [type] $file
      * @param string $field
      * @return void
      */
-    protected function storeFile(string $type = 'store', string $field = 'image', $file = '')
+    protected function storeFile(string $field, $file)
     {
-        switch ($type) {
-            case 'put':
-                $this->contentFile($file, $field);
-                break;
-            case 'store':
-                $this->requestFile($field);
-                break;
-            default:
-                break;
+        if ($file) {
+            $this->contentFile($file, $field);
+        } else {
+            $this->requestFile($field);
         }
     }
 
@@ -126,8 +121,28 @@ trait ModelFileManager
      */
     protected function requestFile(string $field)
     {
-        $request        = request();
-        $this->{$field} = $request->{$field}->store('', $this->disk);
+        $request = request();
+        if ($this->fileIsSafe($field, $request)) {
+            $this->{$field} = $request->{$field}->store('', $this->disk);
+            return;
+        }
+        return;
+
+    }
+
+    /**
+     * Check if the file is in the request and came alright.
+     *
+     * @param string $field
+     * @param Request $request
+     * @return void
+     */
+    protected function fileIsSafe(string $field, \Illuminate\Http\Request $request)
+    {
+        if ($request->hasFile($field) && $request->file($field)->isValid()) {
+            return true;
+        }
+        return false;
     }
 
     /**
