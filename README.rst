@@ -1,13 +1,21 @@
 ======================================================
-Trait para el Manejo de Archivo asociados a modelos.
+Trait para el Manejo de Archivos asociados a modelos.
 ======================================================
+
+Proposito
+----------
+
+Con este trait se puede manejar: almacenamiento, descarga, actualizacion y eliminacion de archivos asociados a un modelo.
+Independientemente del nombre del campo, del tipo de archivo o del modelo que se quiera asociar, ademas almacena en el log de laravel errores descriptivos que pudiera ocurrir para su facil solucion.
+
+Al momento de almacenar el archivo en disco este puede provenir tanto de un formulario (un request en general) como de datos binarios (file_get_content),
+
 
 Primeros Pasos
 ---------------
 
 - Colocar dentro de **app/Traits/** el archivo ModelFileManager.php
-- Dentro del modelo sobre el que se desea aplicar colocar **use App\Traits\ModelFileManager**
-- Luego de abierta la case colocar **use ModelFileManager** 
+- Importar el trait al inicio del archivo del **Modelo** y luego utilizarlo al inicio de la **Clase**.
 - Crear una variable protegida llamada $disk con el valor del disco creado para almacenar la info (en caso de no tener disco
   si no que se realiza en el root o disk base, dejar en blanco o no crear) **Protected $disk = 'images';**
 
@@ -57,3 +65,8 @@ $company = Company::find($id);
 
 **$company->deleteTheFile('logo');**
 
+TODO:
+-----
+
+- Cambiar niveles de visibilidad de las funciones.
+- Validacion para comprobar si el archivo no esta corrupto o esta en el request.
